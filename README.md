@@ -1,6 +1,7 @@
 # API Node.js Template
 
-Este é um template para criar APIs RESTful em Node.js utilizando Express, TypeScript, Prisma ORM e PostgreSQL. O projeto está configurado para rodar em containers Docker com autoreload para desenvolvimento.
+Esta é uma API Node.js, capaz de gerenciar tarefas de usuários previamente cadastrados.
+O objetivo deste projeto é fixar conhecimentos visto durante o curso de Node.js, utilizando as tecnologias Express, TypeScript e Prisma para criar uma estrutura básica de API.
 
 ## Descrição
 
@@ -8,14 +9,11 @@ O template inclui uma estrutura básica para uma API Node.js com:
 - **Express**: Framework web para Node.js.
 - **TypeScript**: Superset do JavaScript com tipagem estática.
 - **Prisma**: ORM para interação com o banco de dados PostgreSQL.
-- **Docker**: Containerização para facilitar o desenvolvimento e deploy.
-- **Autoload**: Recarregamento automático do servidor durante o desenvolvimento.
 
 ## Pré-requisitos
 
 Antes de começar, certifique-se de ter instalado:
 - [Node.js](https://nodejs.org/) (versão 18 ou superior)
-- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/)
 - [Git](https://git-scm.com/)
 
 ## Como Usar Este Template
@@ -36,49 +34,27 @@ Este repositório é um template no GitHub. Para usá-lo:
 
 1. Crie um arquivo `.env` na raiz do projeto com base no arquivo `.env-example`:
    ```env
-   PORT=3030
-   POSTGRES_USER=seu_usuario
-   POSTGRES_PASSWORD=sua_senha
-   POSTGRES_DB=seu_banco
+   PORT=3000
    DATABASE_URL="postgresql://seu_usuario:sua_senha@localhost:5432/seu_banco?schema=public"
+   JWT_SECRET="sua_chave_secreta_para_jwt" (Pode ser qualquer string segura)
    ```
 
 2. Ajuste as configurações no `prisma/schema.prisma` conforme necessário para o seu banco de dados.
 
 ## Instalação e Execução
 
-### Com Docker (Recomendado)
-
-1. Certifique-se de que o Docker e Docker Compose estão instalados e rodando.
-
-2. Execute o comando para construir e iniciar os containers:
-   ```bash
-   docker compose up --build
-   ```
-
-3. A API estará disponível em `http://localhost:3030`.
-
-4. O Prisma Studio (interface gráfica para o banco) estará disponível em `http://localhost:5555`.
-
-5. Para parar os containers:
-   ```bash
-   docker compose down
-   ```
-
-**Nota**: Com Docker, o autoreload está ativado. Qualquer mudança nos arquivos será automaticamente refletida no container.
-
-### Sem Docker (Desenvolvimento Local)
+### Desenvolvimento Local
 
 1. Instale as dependências:
    ```bash
    npm install
    ```
 
-2. Configure o banco de dados PostgreSQL localmente ou use um serviço como ElephantSQL.
+2. Configure o banco de dados PostgreSQL localmente ou use um serviço como NeonDB.
 
-3. Execute as migrações do Prisma:
+3. Crie as models e faça as migrações usando o Prisma:
    ```bash
-   npx prisma migrate dev
+   npx prisma migrate dev --name init
    ```
 
 4. Gere o cliente Prisma:
@@ -91,7 +67,7 @@ Este repositório é um template no GitHub. Para usá-lo:
    npm run dev
    ```
 
-6. A API estará disponível em `http://localhost:3030`.
+6. A API estará disponível em `http://localhost:3000`.
 
 ## Estrutura do Projeto
 
@@ -101,18 +77,14 @@ Este repositório é um template no GitHub. Para usá-lo:
 │   ├── database/        # Configurações do banco de dados
 │   ├── dtos/            # Data Transfer Objects
 │   ├── envs/            # Configurações de ambiente
-│   ├── middlewares/     # Middlewares personalizados
-│   ├── models/          # Modelos de dados
+│   ├── middlewares/     # Middlewares de autenticação, validação, etc.
 │   ├── routes/          # Definições de rotas
 │   ├── services/        # Lógica de negócio
 │   ├── utils/           # Utilitários
-│   ├── app.ts           # Configuração do Express
 │   └── server.ts        # Ponto de entrada da aplicação
 ├── prisma/
 │   ├── schema.prisma    # Esquema do banco de dados
 │   └── migrations/      # Migrações do Prisma
-├── Dockerfile           # Configuração do container da aplicação
-├── docker-compose.yml   # Configuração dos serviços Docker
 ├── package.json         # Dependências e scripts
 ├── tsconfig.json        # Configuração do TypeScript
 └── readme.md            # Este arquivo
@@ -128,11 +100,10 @@ Este repositório é um template no GitHub. Para usá-lo:
 
 - **Node.js**: Runtime JavaScript.
 - **Express**: Framework web.
-- **TypeScript**: Linguagem de programação.
+- **TypeScript**: Superset do JavaScript com tipagem estática.
 - **Prisma**: ORM para banco de dados.
 - **PostgreSQL**: Banco de dados relacional.
-- **Docker**: Containerização.
-- **ts-node-dev**: Ferramenta para desenvolvimento com TypeScript e autoreload.
+- **ts-node-dev**: Ferramenta para desenvolvimento com TypeScript e autoreload. (pode ocorrer erro e não funcionar o autoreload)
 
 ## Contribuição
 
