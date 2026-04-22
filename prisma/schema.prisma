@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  importFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tarefa {
+  id            String   @id @db.VarChar(36)
+  titulo        String   @db.VarChar(100)
+  descricao     String   @db.VarChar
+  status        Status   @default(PENDENTE)
+  criadoEm     DateTime @default(now()) @db.Timestamp(6) @map("criado_em")
+  atualizadoEm DateTime @default(now()) @map("atualizado_em")
+  usuarioId    String   @db.VarChar(36) @map("usuario_id")
+  usuario       Usuario  @relation(fields: [usuarioId], references: [id])
+
+  @@map("tarefa")
+}
+
+model Usuario {
+  id           String   @id @db.VarChar(36)
+  nome         String   @db.VarChar(50)
+  email        String   @unique @db.VarChar(100)
+  senha        String   @db.VarChar
+  criadoEm     DateTime @default(now()) @db.Timestamp(6) @map("criado_em")
+  atualizadoEm DateTime @updatedAt @map("atualizado_em")
+  tarefa       Tarefa[]
+
+  @@map("usuario")
+}
+
+enum Status {
+  PENDENTE
+  EM_ANDAMENTO
+  CONCLUIDO
+  @@map("status")
+}
