@@ -2,7 +2,6 @@ import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import httpResponse from '../utils/http.response';
 
-// Estendemos a interface Request do Express para incluir o ID do usuário que virá do token
 export interface AuthRequest extends Request {
   usuarioId?: string;
 }
@@ -30,7 +29,6 @@ export const authMiddleware = (req: AuthRequest, res: Response, next: NextFuncti
 
     req.usuarioId = decoded.id;
 
-    // 6. Manda a requisição seguir em frente para o Controller
     return next();
     
   } catch (error) {

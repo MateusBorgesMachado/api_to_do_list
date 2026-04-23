@@ -70,9 +70,9 @@ export class TarefaService {
         await this.buscarPorId(id, usuarioId);
 
         if (dados.status) {
-            const statusValidos = ['pendente', 'em_andamento', 'concluida'];
+            const statusValidos = ['PENDENTE', 'EM_ANDAMENTO', 'CONCLUIDA'];
             if (!statusValidos.includes(dados.status)) {
-                throw new Error('Status inválido. Use: pendente, em_andamento ou concluida.');
+                throw new Error('Status inválido. Use: PENDENTE, EM_ANDAMENTO ou CONCLUIDA.');
             }
         }
 

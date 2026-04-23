@@ -10,7 +10,6 @@ enum messageMap {
 
 export default function httpResponse<T>(res: Response, statusCode: number, data?: T) {
     return res.status(statusCode).json({
-        ok: false,
         message: messageMap[statusCode],
         data: data
     })

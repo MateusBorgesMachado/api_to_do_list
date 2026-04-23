@@ -121,7 +121,6 @@ export class TarefaController {
                 return httpResponse(res, 401, { mensagem: 'Usuário não autenticado.' });
             }
 
-            // Passamos o titulo como string para o service
             const tarefas = await this.tarefaService.buscarPorTitulo(String(titulo), usuarioId);
 
             return httpResponse(res, 200, tarefas);

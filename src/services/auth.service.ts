@@ -18,7 +18,6 @@ export class AuthService {
       throw new Error('Credenciais inválidas');
     }
 
-    // 4. Garante que temos um segredo configurado no .env
     const secret = process.env.JWT_SECRET;
     if (!secret) {
       throw new Error('Erro de configuração do servidor');
